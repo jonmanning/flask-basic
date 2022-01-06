@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+    basic:
+        image: nginx:1.21.1
+        restart: always
+        ports:
+            - 8000:80
+        volumes:
+            - ./code/basic:/usr/share/nginx/html
+        depends_on:
+            - sqlite
+
+    sqlite:    
+        container_name: sqlite
+        build:
+            context: ./data/sqlite
+            dockerfile: Dockerfile
+        image: sqlite-image
+        volumes:
+            - ./data/sqlite/volumes/basic:/data/sqlite/basic
